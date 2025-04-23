@@ -20,7 +20,7 @@ export default function SignIn() {
     
     try {
       await signin(email, password);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Failed to sign in";
       setError(errorMessage);
@@ -36,7 +36,7 @@ export default function SignIn() {
     
     try {
       await signinWithGoogle();
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Failed to sign in with Google";
       setError(errorMessage);

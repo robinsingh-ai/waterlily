@@ -21,7 +21,7 @@ export default function SignUp() {
     
     try {
       await signup(email, password, name);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Failed to create account";
       setError(errorMessage);
@@ -37,7 +37,7 @@ export default function SignUp() {
     
     try {
       await signinWithGoogle();
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Failed to sign in with Google";
       setError(errorMessage);

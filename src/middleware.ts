@@ -6,10 +6,6 @@ export function middleware(request: NextRequest) {
   // Get the pathname from the request
   const { pathname } = request.nextUrl;
   
-  // Check if the user is authenticated using cookies
-  const authCookie = request.cookies.get('waterlily-auth');
-  const isAuthenticated = !!authCookie;
-  
   // Define protected routes
   const protectedRoutes = [
     '/dashboard',
@@ -22,14 +18,18 @@ export function middleware(request: NextRequest) {
     pathname.startsWith(route)
   );
   
+  // Check for Firebase Auth token
+  const firebaseAuthToken = request.cookies.get('firebase-auth-token')?.value;
+  const isAuthenticated = !!firebaseAuthToken;
+  
   // Redirect to login if accessing a protected route without authentication
   if (isProtectedRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL('/auth/signin', request.url));
   }
   
-  // Redirect to dashboard if already authenticated and accessing auth pages
+  // Redirect to home page if already authenticated and accessing auth pages
   if (isAuthenticated && (pathname.startsWith('/auth/'))) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
   
   return NextResponse.next();
